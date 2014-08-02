@@ -30,15 +30,29 @@ $(document).ready(function() {
     //Get Report
     $('.report').on('click', function() {
         var flower = $(this).attr("data-flower-type");
-        //...
         //part 1: make room for report
         $(this).closest(".thumbnail").children().not(".img-responsive").toggle()
         //part 2: print data
-        var flower = "placeHolder";
+        multiDayReport(flower);
     });
 
 
 });
+
+//Cycle through days and find firstBloom and bloomRange for each
+function multiDayReport(flower) {
+    var start = new Date(2014, 07, 01);
+    var end = new Date(2014, 07, 07);
+    
+    while (start <= end) {
+        var i = start.getDate();
+        getReport (flower, i);
+        $(this).closest(".caption").find(".dropHere").append("<div class='well'></div>");
+        $(this).closest(".caption").find(".well").text("Season Start: " + firstBloom.created + ", Season Length: " + bloomRange);
+        var newDate = start.setDate(start.getDate() + 1);
+        start = newDate(newDate);
+    }
+}
 
 //Sending flower sightings to Apigee
 
@@ -101,8 +115,9 @@ function getReport(flower, day) {
             console.log(data.entities.length);
             
             var bloomCount = data.entities.length;
+            var firstBloom = data.entities[0]
             var lastBloom = data.entities.length - 1;
-            var bloomRange = data.entities[lastBloom].getTime - data.entities[0].getTime;
+            var bloomRange = data.entities[lastBloom].getTime - data.entities[firstBloom].getTime;
             return (data.entities.length);
         }
         
