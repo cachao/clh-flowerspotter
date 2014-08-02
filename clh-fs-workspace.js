@@ -34,7 +34,7 @@ $(document).ready(function() {
         //part 1: make room for report
         $(this).closest(".thumbnail").children().not(".img-responsive").toggle()
         //part 2: print data
-        var flower = 
+        var flower = "placeHolder";
     });
 
 
@@ -59,6 +59,7 @@ function iSee(thisFlower) {
 //Calling seasonal information
 
 //part 1: define AJAX search parameters
+
 function getRange(flower, day) { //doing "day" for now, eventually will need to do "year"
 
     var startRange = new Date();
@@ -72,7 +73,10 @@ function getRange(flower, day) { //doing "day" for now, eventually will need to 
     startRange.setMinutes(1);
 
     return {
-        ql: "select * where flowerType='" + flower + "'" and created gte " + startRange.getTime() + " and created lte " + endRange.getTime() + " order by created asc",
+        ql: "select * where flowerType='"
+        + flower + "' and created gte " 
+        + startRange.getTime() + " and created lte " 
+        + endRange.getTime() + " order by created asc",
         limit: 1000
     }
 }
@@ -94,7 +98,7 @@ function getReport(flower, day) {
 
         success: function(data) {
             
-            console.log(data);
+            console.log(data.entities.length);
             
             var bloomCount = data.entities.length;
             var lastBloom = data.entities.length - 1;
@@ -104,7 +108,6 @@ function getReport(flower, day) {
         
     })
 }
-
 //Unsuccessful trial #2
 /*function bloomPasser(x) {
     return(x);
