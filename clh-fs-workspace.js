@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     $(".graphs").toggle();
+    $(".passer").hide();
 
     //Flower sighting button listener
 
@@ -10,29 +11,34 @@ $(document).ready(function() {
         iSee(flowerType);
         console.log(flowerType);
         //part 2: increase the daily counter
-        var flowerCount = $(this).closest(".caption").find(".badge").text();
-        var newFlowerCount = parseInt(flowerCount) + 1;
-        $(this).closest(".caption").find(".badge").text(newFlowerCount);
+        //var flowerCount = $(this).closest(".caption").find(".badge").text();
+        //var newFlowerCount = parseInt(flowerCount) + 1;
+        //$(this).closest(".caption").find(".badge").text(newFlowerCount);
     });
 
     //Count this season? Of the Day?
 
-    /*$('.flower').each(function() {
+    $('.flower').each(function() {
         var flower = $(this).attr('data-flower-type');
         console.log(flower);
         var i = new Date();
         var day = i.getDate();
         console.log(day);
-        getReport(flower, day);
-        $(this).closest(".caption").find(".badge").text("yo");
-    });*/
+        getReport(flower, 2);
+        var k = $("#bloomCountPasser");
+        if (k = 0) {
+            $(this).closest(".caption").find(".badge").text(0)
+        } else {
+            $(this).closest(".caption").find(".badge").text(k);
+        };
+    });
 
     //Get Report
     $('.report').on('click', function() {
         var flower = $(this).attr("data-flower-type");
         //part 1: make room for report
         $(this).closest(".thumbnail").children().not(".img-responsive").toggle()
-        //part 2: print data
+            //part 2: print data
         multiDayReport(flower);
     });
 
@@ -43,14 +49,27 @@ $(document).ready(function() {
 function multiDayReport(flower) {
     var start = new Date(2014, 07, 01);
     var end = new Date(2014, 07, 07);
-    
+    var start = start.getDate();
+    var end = end.getDate();
+
+
     while (start <= end) {
-        var i = start.getDate();
-        getReport (flower, i);
-        $(this).closest(".caption").find(".dropHere").append("<div class='well'></div>");
-        $(this).closest(".caption").find(".well").text("Season Start: " + firstBloom.created + ", Season Length: " + bloomRange);
-        var newDate = start.setDate(start.getDate() + 1);
-        start = newDate(newDate);
+        getReport(flower, start);
+
+        var j = $("#firstBloomPasser");
+        var k = parseInt(j);
+        var firstBloom = j.toString("DDD mm ss");
+
+        var l = $("#bloomRangePasser");
+        var m = parseInt(l);
+        var bloomRange = l.toString("mm ss");
+
+        //this part needs fixing
+        //var n = document.createElement("div class='well'");
+        //$(this).closest(".caption").find(".dropHere").append(n);
+        //$(this).closest(".caption").find(".well").text("Season Start: " + firstBloom + ", Season Length: " + bloomRange);
+        var newDate = start + 1; //Be sure to make "start" and "end" reflect a small range
+        var start = newDate;
     }
 }
 
@@ -74,56 +93,59 @@ function iSee(thisFlower) {
 
 //part 1: define AJAX search parameters
 
-function getRange(flower, day) { //doing "day" for now, eventually will need to do "year"
-
+function getRange(flower, day) {
     var startRange = new Date();
     startRange.setDate(day);
-    startRange.setHours(0);
-    startRange.setMinutes(1);
-
     var endRange = new Date();
     endRange.setDate(startRange.getDate() + 1);
-    startRange.setHours(0);
-    startRange.setMinutes(1);
 
-    return {
-        ql: "select * where flowerType='"
-        + flower + "' and created gte " 
-        + startRange.getTime() + " and created lte " 
-        + endRange.getTime() + " order by created asc",
-        limit: 1000
-    }
+    var arr = [
+        'select * where flowerType=',
+        "'",
+        flower,
+        "'",
+        ' and created gte ',
+        startRange.getTime(),
+        ' and created lte ',
+        endRange.getTime(),
+        ' order by created asc'
+    ]
+
+    var searchParameters = arr.join('');
+    return (encodeURIComponent(searchParameters));
 }
 
 //part 2: run the AJAX request, and divy up the data into variables
 
-//Trying to save the bloomCount variable from getReport function... How do I hold on to a local variable once a function resolves?
-
-//Unsuccessful trial #1
-/*function totalBlooms (flower, day) {
-    var bloomCount = getReport (flower, day);
-    return (bloomCount);*/
-
 function getReport(flower, day) {
     $.ajax({
-        url: "https://api.usergrid.com/cchao/clh-flowerspotter/flowers?ql=",
-        type: "GET",
-        data: getRange(flower, day),
+        "url": "http://api.usergrid.com/cchao/clh-flowerspotter/flowers?ql=" + getRange(flower, day) + "&limit=1000",
+        "type": "GET",
+        "success": function(data) {
 
-        success: function(data) {
-            
             console.log(data.entities.length);
-            
+
             var bloomCount = data.entities.length;
-            var firstBloom = data.entities[0]
-            var lastBloom = data.entities.length - 1;
-            var bloomRange = data.entities[lastBloom].getTime - data.entities[firstBloom].getTime;
-            return (data.entities.length);
+            
+            if (bloomCount == 0) {
+                var firstBloom = 0;
+                var lastBloom = 0;
+                var bloomRange = "No blooms seen."
+            } else {
+                var firstBloom = data.entities[0].created;
+                var i = data.entities.length - 1;
+                var lastBloom = data.entities[i].created;
+                var x = lastBloom - firstBloom;
+                var y = x / 6000;
+                var z = y.toFixed(1);
+                var bloomRange = z + " minutes";
+            };
+            $("#bloomCountPasser").text(bloomCount);
+            $("#firstBloomPasser").text(firstBloom);
+            $("#lastBloomPasser").text(lastBloom);
+            $("#bloomRangePasser").text(bloomRange);
+
+            //var bloomCounter = [bloomCount, firstBloom, lastBloom, bloomRange];
         }
-        
-    })
+    });
 }
-//Unsuccessful trial #2
-/*function bloomPasser(x) {
-    return(x);
-}*/
