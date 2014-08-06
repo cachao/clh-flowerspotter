@@ -9,8 +9,14 @@
     <script src='clh-fs-workspace.js'></script>
 
     <style>
-        body {
-            background-color: #eee;
+        body, .jumbotron {
+            background-color: #6b8395;
+            color: #f0f2f3;
+            margin: 10px;
+        }
+        .btn-eazy {
+            background-color: #e2ad0c;
+            color: #f0f2f3;
         }
         btn-list {
             padding-left: 40px;
@@ -22,33 +28,47 @@
             padding-bottom: 2px;
             padding-top: 2px;
         }
+        .well {
+            background-color: #b6d0f0;
+            color: white;
+        }
         .row {
             padding-left: 2px;
             padding-right: 2px;
         }
         .container-fluid {
             padding: 20px;
+            margin: 20px;
         }
         .thumbnail .caption {
-            color: #eee;
+            color: #312d2a;
+        }
+        .info {
+            background-color: white/*#c63a09*/;
+            margin-bottom: 5px;
+            color: #312d2a;
+        }
+        .btn-woozy {
+            background-color: #957d6b;
+            color: #f0f2f3;
         }
         #birdsfoot-box {
-            background-color: #280f6b;
+            background-color: white/*#280f6b*/;
         }
         #cowslip-box {
-            background-color: #00bbfe;
+            background-color: white/*#00bbfe*/;
         }
         #scabious-box {
-            background-color: #6a8745;
+            background-color: white/*#6a8745*/;
         }
         #bedstraw-box {
-            background-color: #2d3c97;
+            background-color: white/*#2d3c97*/;
         }
         #knapweed-box {
-            background-color: #38bf58;
+            background-color: white/*#38bf58*/;
         }
         #snowdrop-box {
-            background-color: #a69ed9;
+            background-color: white/*#a69ed9*/;
         }
     </style>
 
@@ -61,83 +81,92 @@
 <div id="bloomRangePasser" class="passer">5</div>
     <div class="container-fluid">
         <div class="jumbotron">
-            <h1>Climate Calendar / Calendr Hinsawdd</h1>
-            <p>The wildflowers planted in this dry stone wall are all part of the local flower palate that changes through the seasons. They are planted to bloom through the year in order from north to south (or left to right as you face the wooden fence) during the months indicated: a calendar of flowers. As climate change brings warmer springs and shorter winters, the blooms may appear outside their start month, or open out of order. Dry stone wall built by Aeryn Jones.</p>
-            <p>Mae’r blodau gwyllt sydd wedi’u plannu yn y wal gerrig hon i gyd yn rhan o’r darlun blodau lleol sy’n newid gyda’r tymhorau. Maen nhw wedi’u plannu i flodeuo trwy gydol y flwyddyn mewn trefn o’r gogledd i’r de (neu o’r chwith i’r dde wrth i chi wynebu’r ffens pren) yn ystod y misoedd a ddangosir: sef calendr o flodau. Wrth i newid yn yr hinsawdd ddod â gwanwynau cynhesach a gaeafau byrrach, gall y blodau ymddangos y tu allan i’w mis dechreuol, neu agor mewn gwahanol drefn. Aeryn Jones adeiladodd y wall gerrig.</p>
+            <div>
+                <input type="image" src="welsh-flag.png" class="translator" id="welsh" name="welsh" width="35" height="35"></input>
+                <input type="image" src="english-flag.png" class="translator" id="english" name="english" width="35" height="35"></input>
+            </div>
+            <h1><span class="english">Climate Calendar</span><span class="welsh">Calendr Hinsawdd</span></h1>
+            <span class="english"><p>The wildflowers planted in this dry stone wall are all part of the local flower palate that changes through the seasons. They are planted to bloom through the year in order from north to south (or left to right as you face the wooden fence) during the months indicated: a calendar of flowers. As climate change brings warmer springs and shorter winters, the blooms may appear outside their start month, or open out of order. Dry stone wall built by Aeryn Jones.</p></span>
+            <span class="welsh"><p>Mae’r blodau gwyllt sydd wedi’u plannu yn y wal gerrig hon i gyd yn rhan o’r darlun blodau lleol sy’n newid gyda’r tymhorau. Maen nhw wedi’u plannu i flodeuo trwy gydol y flwyddyn mewn trefn o’r gogledd i’r de (neu o’r chwith i’r dde wrth i chi wynebu’r ffens pren) yn ystod y misoedd a ddangosir: sef calendr o flodau. Wrth i newid yn yr hinsawdd ddod â gwanwynau cynhesach a gaeafau byrrach, gall y blodau ymddangos y tu allan i’w mis dechreuol, neu agor mewn gwahanol drefn. Aeryn Jones adeiladodd y wall gerrig.</p></span>
         </div>
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="thumbnail" id="birdsfoot-box">
-                    <img src="500_Birdsfoot Trefoil.jpg" class="img-responsive" alt="Birdsfoot Trefoil">
-                    <div class="caption info">
-                        <h3>Bird-Foot Trefoil</h3>
-                        <p>Lotus corniculatus is a common flowering plant in the pea family Fabaceae, native to grassland in temperate Eurasia and North Africa.</p>
-                        <p align="center"><em>You have seen </em><span class="badge">0</span><em> blooms today.</em></p>                        
-                        <p><button type="button" class="btn btn-primary btn-lg btn-block flower" data-flower-type="Bird-foot Trefoil">Record a Bloom</button><p>
-                        <p><button type="button" class="btn btn-danger btn-lg btn-block report" data-flower-type="Bird-foot Trefoil">Bloom History</button></p>
+                <div class="thumbnail" id="Cowslip-box">
+                    <img src="CLHCowslip.jpg" class="img-responsive" alt="Cowslip">
+                    <div class="caption">
+                        <h3>Cowslip</h3>
+                        <p>Primula veris is a flowering plant in the genus Primula of the family Primulaceae, native throughout most of temperate Europe and Asia.</p>
+                        <p align="center"><em>You have seen </em><span class="badge Cowslip-badge">0</span><em> blooms today.</em></p>                        
+                        <p><button type="button" class="btn btn-eazy btn-lg btn-block flower" id="1000" data-flower-type="Cowslip">Record a Bloom</button></p>
+                        <p><button type="button" class="btn btn-woozy btn-lg btn-block report" data-flower-type="Cowslip">Bloom History</button></p>
                     </div>
-                    <div class="caption graphs dropHere">
-                        <p>How many flowers have you seen over the years?</p>
-                        <p><button type="button" class="btn btn-danger btn-lg btn-block report">Back</button></p>
+                    <div class="caption graphs">
+                        <p align="center"><em>The History of Cowslip Sightings</em></p>
+                            <div class="caption" id="CowslipDrop"></div>
+                        <p><button type="button" class="btn btn-danger btn-lg btn-block reset" data-flower-type="Cowslip">Back</button></p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="thumbnail" id="cowslip-box">
-                    <img src="500_Cowslip.jpg" class="img-responsive" alt="Cowslips">
+                <div class="thumbnail" id="Birdsfoot Trefoil-box">
+                    <img src="CLHBirdsfootTrefoil.jpg" class="img-responsive" alt="BirdsfootTrefoil">
                     <div class="caption">
-                        <h3>Cowslip</h3>
-                        <p>Primula veris is a flowering plant in the genus Primula of the family Primulaceae, native throughout most of temperate Europe and Asia.</p>
-                        <p align="center"><em>You have seen </em><span class="badge">0</span><em> blooms today.</em></p>                        
-                        <p><button type="button" class="btn btn-primary btn-lg btn-block flower" data-flower-type="Cowslip">Record a Bloom</button></p>
-                        <p><a href="#" class="btn btn-danger btn-lg btn-block" role="button">Bloom History</a></p>
+                        <h3>Bird-Foot Trefoil</h3>
+                        <p>Lotus corniculatus is a common flowering plant in the pea family Fabaceae, native to grassland in temperate Eurasia and North Africa.</p>
+                        <p align="center"><em>You have seen </em><span class="badge Trefoil-badge">0</span><em> blooms today.</em></p>                        
+                        <p><button type="button" class="btn btn-eazy btn-lg btn-block flower" id="1001" data-flower-type="Bird-foot Trefoil">Record a Bloom</button><p>
+                        <p><button type="button" class="btn btn-woozy btn-lg btn-block report" data-flower-type="Bird-foot Trefoil">Bloom History</button></p>
+                    </div>
+                    <div class="caption graphs" id="Bird-foot TrefoilDrop">
+                        <p>How many flowers have you seen over the years?</p>
+                        <p><button type="button" class="btn btn-danger btn-lg btn-block report reset">Back</button></p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="thumbnail" id="scabious-box">
-                    <img src="500_Field Scabious.jpg" class="img-responsive" alt="Field Scabious">
+                    <img src="CLHFieldScabious.jpg" class="img-responsive" alt="FieldScabious">
                     <div class="caption">
                         <h3>Field Scabious</h3>
                         <p>Knautia arvensis, which grows between 25 and 100 cm, prefers grassy places and dry soils and flowers between July and September.</p>
-                        <p align="center"><em>You have seen </em><span class="badge">0</span><em> blooms today.</em></p>                        
-                        <p><button type="button" class="btn btn-primary btn-lg btn-block flower" data-flower-type="Field Scabious">Record a Bloom</button></p>
+                        <p align="center"><em>You have seen </em><span class="badge Scabious-badge">0</span><em> blooms today.</em></p>                        
+                        <p><button type="button" class="btn btn-primary btn-lg btn-block flower" id="1002" data-flower-type="Field Scabious">Record a Bloom</button></p>
                         <p><a href="#" class="btn btn-danger btn-lg btn-block" role="button">Bloom History</a></p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="thumbnail" id="bedstraw-box">
-                    <img src="500_Hedge Bedstraw.jpg" class="img-responsive" alt="Hedge Bedstraw">
+                    <img src="CLHHedgeBedstraw.jpg" class="img-responsive" alt="HedgeBedstraw">
                     <div class="caption">
                         <h3>Hedge Bedstraw</h3>
                         <p>Galium album is widespread over much of Europe. It is found in pastures, grassy banks, etc., especially on dry calcareous soils.</p>
-                        <p align="center"><em>You have seen </em><span class="badge">0</span><em> blooms today.</em></p>                        
-                        <p><button type="button" class="btn btn-primary btn-lg btn-block flower" data-flower-type="Hedge Bedstraw">Record a Bloom</button></p>
+                        <p align="center"><em>You have seen </em><span class="badge Bedstraw-badge">0</span><em> blooms today.</em></p>                        
+                        <p><button type="button" class="btn btn-primary btn-lg btn-block flower" id="1003" data-flower-type="Hedge Bedstraw">Record a Bloom</button></p>
                         <p><a href="#" class="btn btn-danger btn-lg btn-block" role="button">Bloom History</a></p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="thumbnail" id="knapweed-box">
-                    <img src="500_Knapweed.jpg" class="img-responsive" alt="Knapweed">
+                    <img src="CLHKnapweed.jpg" class="img-responsive" alt="Knapweed">
                     <div class="caption">
                         <h3>Knapweed</h3>
                         <p>Centaurea is a genus of between 350 and 600 species of herbaceous thistle-like plants in the family Asteraceae, found only north of the equator.</p>
-                        <p align="center"><em>You have seen </em><span class="badge">0</span><em> blooms today.</em></p>
-                        <p><button type="button" class="btn btn-primary btn-lg btn-block flower" data-flower-type="Knapweed">Record a Bloom</button></p>
+                        <p align="center"><em>You have seen </em><span class="badge Knapweed-badge">0</span><em> blooms today.</em></p>
+                        <p><button type="button" class="btn btn-primary btn-lg btn-block flower" id="1004" data-flower-type="Knapweed">Record a Bloom</button></p>
                         <p><a href="#" class="btn btn-danger btn-lg btn-block" role="button">Bloom History</a></p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="thumbnail" id="snowdrop-box">
-                    <img src="500_Snowdrop.jpg" class="img-responsive" alt="Snowdrop">
+                    <img src="CLHSnowdrop.jpg" class="img-responsive" alt="Snowdrop">
                     <div class="caption">
                         <h3>Snowdrop</h3>
                         <p>Galanthus flowers in winter, and is sometimes confused with its relatives, snowflakes, which are Leucojum and Acis species.</p>
-                        <p align="center"><em>You have seen </em><span class="badge">0</span><em> blooms today.</em></p>                        
-                        <p><button type="button" class="btn btn-primary btn-lg btn-block flower" data-flower-type="Snowdrop">Record a Bloom</button></p>
+                        <p align="center"><em>You have seen </em><span class="badge Snowdrop-badge">0</span><em> blooms today.</em></p>                        
+                        <p><button type="button" class="btn btn-primary btn-lg btn-block flower" id="1005" data-flower-type="Snowdrop">Record a Bloom</button></p>
                         <p><a href="#" class="btn btn-danger btn-lg btn-block" role="button">Bloom History</a></p>
                     </div>
                 </div>
