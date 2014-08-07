@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
     $(".graphs").toggle();
-    $(".passer").hide();
     $(".welsh").toggle();
     $("#english").attr("disabled", "disabled");
 
@@ -17,7 +16,7 @@ $(document).ready(function() {
     $('.flower').on('click', function() {
         var flowerType = $(this).attr('data-flower-type');
         iSee(flowerType);
-        var flowerCount = $(this).closest(".caption").find(".badge").text();
+        var flowerCount = $(this).closest(".caption").find(".badge:first").text();
         var newFlowerCount = parseInt(flowerCount) + 1;
         $(this).closest(".caption").find(".badge").text(newFlowerCount);
     });
@@ -54,41 +53,6 @@ $(document).ready(function() {
 
 });
 
-//Cycle through days and find firstBloom and bloomRange for each
-function multiDayReport(flower) {
-    //var e = new Date(2014, 07, 01);
-    var f = new Date(2014, 07, 07);
-    //var start = e.getDate();
-    var end = f.getDate();
-
-
-    for (start = 01; start <= end; start++) {
-        getReport(flower, start, function() {
-            var j = stored_values.firstBloom;
-            var k = parseInt(j);
-            stored_values.day = k;
-            if (k = undefined || k == 0) {
-                $(n).prepend("<div class='well well-sm info'><p>'sup'</p></div>");
-                $(n).closest(".caption").find(".well").text("No blooms during this time.");
-            } else {
-                var l = new Date(stored_values.day);
-                var firstBloom = l.customFormat("#DDD# #h#:#mm# #ampm#");
-                console.log(firstBloom);
-                var n = stored_values.bloomRange;
-                var o = parseInt(n);
-                var p = new Date(o);
-                var bloomRange = p.customFormat("#mm#:#ss#");
-                console.log(bloomRange);
-                var n = '#' + flower + 'Drop';
-                var q = "id='" + flower + "-well-" + start + "' ";
-                var r = "#" + flower + "-well-" + start;
-                $(n).prepend("<div class='well well-sm info " + flower +"-well' " + q + "<p align='center'>sup</p></div>");
-                $(r).text("Season Start: " + firstBloom + ", Length: " + bloomRange);
-            };
-        });
-    };
-};
-
 var stored_values = {
     flower: '',
     day: '',
@@ -98,8 +62,9 @@ var stored_values = {
     bloomCount: ''
 };
 
-//Sending flower sightings to Apigee
+//CHAPTER I: Sending Info
 
+//part 1: Sending flower sightings to Apigee
 function iSee(thisFlower) {
 
     $.ajax({
@@ -112,10 +77,9 @@ function iSee(thisFlower) {
     });
 }
 
-//Calling seasonal information
+//CHAPTER II: Reports
 
 //part 1: define AJAX search parameters
-
 function getRange(flower, day) {
     var startRange = new Date();
     startRange.setDate(day - 1);
@@ -138,11 +102,10 @@ function getRange(flower, day) {
     return (encodeURIComponent(searchParameters));
 }
 
-//part 2: run the AJAX request, and divy up the data into variables
-
+//part 2: centerpiece of the report generator: parses ajax info and distributes to stored_values properties
 function getReport(flower, day, callback) {
     $.ajax({
-        "url": "http://api.usergrid.com/cchao/clh-flowerspotter/flowers?ql=" + getRange(flower, day) + "&limit=1000",
+        "url": "https://api.usergrid.com/cchao/clh-flowerspotter/flowers?ql=" + getRange(flower, day) + "&limit=1000",
         "type": "GET",
         "success": function(data) {
             
@@ -172,7 +135,45 @@ function getReport(flower, day, callback) {
     });
 };
 
-//borrowed date converter from Phrogz
+//part 3: cycle through days and find stored_values.firstBloom and stored_values.bloomRange for each
+function multiDayReport(flower) {
+    //var e = new Date(2014, 07, 01);
+    var f = new Date(2014, 07, 07);
+    //var start = e.getDate();
+    var end = f.getDate();
+
+
+    for (start = 01; start <= end; start++) {
+        getReport(flower, start, function() {
+            var j = stored_values.firstBloom;
+            var k = parseInt(j);
+            stored_values.day = k;
+            if (k = undefined || k == 0) {
+                $(n).prepend("<div class='well well-sm info'><p>'sup'</p></div>");
+                $(n).closest(".caption").find(".well").text("No blooms during this time.");
+            } else {
+                var l = new Date(stored_values.day);
+                var firstBloom = l.customFormat("#DDD# #h#:#mm# #ampm#");
+                console.log(firstBloom);
+                var n = stored_values.bloomRange;
+                var o = parseInt(n);
+                var p = new Date(o);
+                var bloomRange = p.customFormat("#mm#:#ss#");
+                console.log(bloomRange);
+                var n = '#' + flower + 'Drop';
+                var q = "id='" + flower + "-well-" + start + "' ";
+                var r = "#" + flower + "-well-" + start;
+                $(n).prepend("<div class='well well-sm info " + flower +"-well' " + q + "<p align='center'>sup</p></div>");
+                $(r).text("Season Start: " + firstBloom + ", Length: " + bloomRange);
+                $(".well").css("background-color", "#96A3CE").css("color", "#fff");
+            };
+        });
+    };
+};
+
+//APPENDIX:
+
+//part 1: converter for date formatting, borrowed from stackoverflow user Phrogz
 Date.prototype.customFormat = function(formatString) {
     var YYYY, YY, MMMM, MMM, MM, M, DDDD, DDD, DD, D, hhh, hh, h, mm, m, ss, s, ampm, AMPM, dMod, th;
     var dateObject = this;
